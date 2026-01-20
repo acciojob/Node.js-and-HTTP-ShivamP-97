@@ -1,23 +1,12 @@
 const http = require('http');
 
 const server = http.createServer((req, res) => {
-  let body = '';
+  const response = {
+    method: req.method
+  };
 
-  req.on('data', chunk => {
-    body += chunk.toString();
-  });
-
-  req.on('end', () => {
-    const responseData = {
-      method: req.method,
-      url: req.url,
-      headers: req.headers,
-      body: body || null
-    };
-
-    res.writeHead(200, { 'Content-Type': 'application/json' });
-    res.end(JSON.stringify(responseData, null, 2));
-  });
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify(response));
 });
 
 server.listen(3000, () => {
