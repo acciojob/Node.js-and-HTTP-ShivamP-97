@@ -1,14 +1,17 @@
 const http = require('http');
 
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end(req.method);
+  const response = {
+    method: req.method,
+    url: req.url
+  };
+
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify(response));
 });
 
-if (require.main === module) {
-  server.listen(3000, () => {
-    console.log('Server is listening on port 3000');
-  });
-}
+server.listen(3000, () => {
+  console.log('Server is listening on port 3000');
+});
 
 module.exports = { server };
